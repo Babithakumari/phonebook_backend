@@ -24,8 +24,17 @@ let persons = [
         "number": "39-23-6423122"
       }
 ]
+// create new token
+morgan.token('data', function (req,res) {
+    const person = {
+        "name": req.body["name"],
+        "number": req.body["number"]
+    }
+    return JSON.stringify(person)
+
+})
 // configure morgan middleware
-app.use(morgan('tiny'))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :data'))
 
 // parse JSON data to body property
 app.use(express.json())
