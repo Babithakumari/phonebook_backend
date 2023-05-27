@@ -1,5 +1,6 @@
 const express = require("express")
 const app = express()
+const morgan = require("morgan")
 
 let persons = [
     { 
@@ -23,6 +24,9 @@ let persons = [
         "number": "39-23-6423122"
       }
 ]
+// configure morgan middleware
+app.use(morgan('tiny'))
+
 // parse JSON data to body property
 app.use(express.json())
 
