@@ -23,6 +23,8 @@ let persons = [
         "number": "39-23-6423122"
       }
 ]
+// parse JSON data to body property
+app.use(express.json())
 
 app.get("/", (request,response) => {
     response.send("Hello world")
@@ -56,6 +58,29 @@ app.delete('/api/persons/:id', (request,response) => {
     const id = Number(request.params.id)
     persons = persons.filter(person => person.id !== id)
     response.status(204).end()
+})
+
+const generateId = () => {
+    const max = 5000
+    const id = Math.floor(Math.random() * max)
+    
+
+    return id
+
+}
+// add a new resource
+app.post("/api/persons",(request,response) =>{
+    
+    const body = request.body
+
+    const person = {
+        id: generateId(),
+        name: body.name,
+        number:body.number
+    }
+    persons.concat(person)
+
+    response.json(person)
 })
 
 
