@@ -35,6 +35,10 @@ morgan.token('data', function (req,res) {
     return JSON.stringify(person)
 
 })
+
+// serve static files
+app.use(express.static('build'))
+
 // configure morgan middleware
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :data'))
 
