@@ -97,23 +97,18 @@ app.post("/api/persons",(request,response) =>{
             error:"number missing"
         })
     }
-    // check if name is unique
-    const name = persons.find(person => person.name===body.name)
-
-    if(name){
-        return response.status(400).json({
-            error:"name must be unique"
-        })
-    }
-
-    const person = {
+    
+    const person = new Person({
         id: generateId(),
         name: body.name,
         number:body.number
-    }
-    persons.concat(person)
+    })
+    
+    person.save().then(savedPerson => {
+        response.json(savedPerson)
+    })
 
-    response.json(person)
+    
 })
 
 
