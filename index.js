@@ -56,8 +56,15 @@ app.get("/api/persons", (request,response) => {
 })
 
 app.get("/info", (request,response) => {
-    const output = `Phonebook has info for ${persons.length} people</br></br> ${new Date()}`
-    response.send(output)
+    Person.count()
+        .then(count => {
+            const output = `Phonebook has info for ${count} people</br></br> ${new Date()}`
+            response.send(output)
+
+        })
+
+        
+    
 })
 
 // get a single phonebook entry
