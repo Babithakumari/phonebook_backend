@@ -48,6 +48,7 @@ app.get("/", (request,response) => {
     response.send("Hello world")
 })
 
+// get all entries
 app.get("/api/persons", (request,response) => {
     Person.find({}).then(persons => {
         response.json(persons)
@@ -112,6 +113,21 @@ app.post("/api/persons",(request,response) =>{
     })
 
     
+})
+
+// update an entry
+app.put("/api/persons/:id", (request,response,next) => {
+    const body = request.body
+
+    const person = {
+        "name": body.name,
+        "number":body.number
+    }
+    Person.findByIdAndUpdate(request.params.id, person, {new:true})
+        .then(updatedPerson => {
+            response.json(updatedPerson)
+        })
+        .catch(error => next(error))
 })
 
 const errorHandler = (error, request,response, next) => {
